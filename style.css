@@ -1,0 +1,886 @@
+/* Reset and Base Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(ellipse at 10% 10%, rgba(255,235,241,0.08) 0%, rgba(255,235,241,0.02) 10%, transparent 30%),
+                radial-gradient(ellipse at 90% 90%, rgba(255,200,220,0.06) 0%, rgba(255,200,220,0.01) 8%, transparent 30%),
+                linear-gradient(180deg, #ffedf2 0%, #ffdfe8 30%, #ffeef6 100%);
+    padding: 20px;
+    overflow: hidden;
+    perspective: 2000px;
+}
+
+/* Notebook Outer Container */
+.notebook-container {
+    background: #fff;
+    width: 100%;
+    max-width: 900px; /* Wider canvas for the split design */
+    height: 580px;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 10px solid #002244; /* Clean contrast binding box */
+    transform-style: preserve-3d;
+}
+
+/* Central Double-Loop Metal Rings */
+.notebook-rings {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    pointer-events: none;
+    z-index: 100; /* Stays above book pages */
+    padding: 20px 0;
+}
+
+/* Generates structural notebook wires down center spine gap */
+.notebook-rings::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        #2b2b2b 0px,
+        #a8b3b8 4px,
+        #ffffff 8px,
+        #a8b3b8 12px,
+        #2b2b2b 16px,
+        transparent 16px,
+        transparent 38px
+    );
+}
+
+/* Main pages structure wrapper */
+.notebook-pages {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 65px); /* Leave precise space bottom row UI handles */
+}
+
+/* The Open Book Two-Page Spread Layout */
+.book-spread {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: left center;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.4s;
+}
+
+/* Left Page & Right Page Grid Splitting Lines Layout */
+.left-page, .right-page {
+    width: 50%;
+    height: 100%;
+    padding: 40px;
+    overflow-y: auto;
+    
+    /* Notebook Lined Paper Grid Generator */
+    background-image: linear-gradient(#e1e8eb 1px, transparent 1px);
+    background-size: 100% 2rem;
+    background-position: 0 10px;
+    background-color: #ffffff;
+}
+
+/* Add custom paper side gutters shading rules */
+.left-page {
+    border-right: 1px solid #d4dadc;
+    padding-right: 35px;
+}
+.right-page {
+    border-left: 1px solid #d4dadc;
+    padding-left: 35px;
+}
+
+/* Visibility Control States */
+.book-spread.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: rotateY(0deg);
+}
+
+.book-spread.flipped {
+    transform: rotateY(-180deg);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Photo Frame Element Design styling rules */
+.photo-frame {
+    width: 100%;
+    height: 100%;
+    max-height: 400px;
+    background: #fafafa;
+    padding: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 3px 5px 15px rgba(0,0,0,0.15);
+    transform: rotate(-2deg); /* Cute polaroid tilted look */
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Keeps image looking perfectly centered without squeezing */
+    border-radius: 2px;
+}
+
+/* Right Side Message Elements Layout */
+.icon {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+}
+
+h2 {
+    color: #ff4d6d;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Georgia', serif;
+    text-align: center;
+}
+
+p {
+    color: #3d3436;
+    line-height: 2rem; /* Perfectly aligns text baselines onto blue guidelines */
+    font-size: 1.02rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+strong {
+    color: #ff4d6d;
+}
+
+/* Bottom Navigation Panel Area Layout */
+.navigation {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    border-top: 2px solid #e1e8eb;
+    border-radius: 0 0 12px 12px;
+    z-index: 110;
+}
+
+.nav-btn {
+    background: #ff758f;
+    color: white;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 117, 143, 0.3);
+}
+
+.nav-btn:hover:not(.disabled) {
+    background: #ff4d6d;
+    transform: scale(1.1);
+}
+
+.nav-btn.disabled {
+    background: #edd6db;
+    color: #b5a4a7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+#page-indicator {
+    color: #a39296;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* --- Envelope Screen Styles --- */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255, 236, 250, 0.97), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(255, 219, 227, 0.96), transparent 30%),
+                linear-gradient(180deg, #ffe5ec 0%, #ffe0f2 45%, #ffd7f1 100%);
+    background-image: radial-gradient(circle at 15% 20%, rgba(255, 105, 180, 0.18) 0%, transparent 8%),
+                      radial-gradient(circle at 80% 15%, rgba(255, 135, 190, 0.15) 0%, transparent 10%),
+                      radial-gradient(circle at 20% 80%, rgba(255, 173, 215, 0.14) 0%, transparent 12%),
+                      radial-gradient(circle at 85% 75%, rgba(255, 145, 200, 0.12) 0%, transparent 10%),
+                      radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.35) 0%, transparent 20%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 99999;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.envelope-screen .envelope-scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: min(100%, 520px);
+    position: relative;
+}
+
+.envelope-screen .envelope-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #9f3a63;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 18px;
+    border-radius: 999px;
+    box-shadow: 0 10px 20px rgba(255, 128, 166, 0.18);
+}
+
+.envelope {
+    width: 340px;
+    height: 220px;
+    position: relative;
+    display: grid;
+    grid-template-rows: 80px 1fr;
+    border-radius: 22px;
+    overflow: visible;
+    background: linear-gradient(180deg, #f9d8ec 0%, #f7add2 100%);
+    box-shadow: 0 28px 56px rgba(0,0,0,0.18);
+}
+
+.envelope.small-envelope {
+    width: 280px;
+    height: 180px;
+}
+
+.envelope-flap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #ffedf4 0%, #ffcade 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 55%, 0 0);
+    transform-origin: top center;
+    transition: transform 0.5s ease;
+    z-index: 2;
+}
+
+.envelope.open .envelope-flap,
+.envelope.small-envelope.open .envelope-flap {
+    transform: translateY(-92px) rotateX(180deg);
+}
+
+.envelope-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #6f3a4c;
+}
+
+.envelope-seal {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 30% 30%, #ffc0d8 0%, #f3568b 45%, #d63b6a 100%);
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: inset 0 3px 8px rgba(255,255,255,0.45), 0 10px 18px rgba(0,0,0,0.18);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    z-index: 5;
+}
+
+.envelope-seal:hover,
+.envelope-seal:focus {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: inset 0 3px 10px rgba(255,255,255,0.6), 0 14px 22px rgba(0,0,0,0.22);
+}
+
+.envelope-text {
+    font-size: 1rem;
+    color: #9c4f6a;
+    font-weight: 700;
+    margin: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.letter-panel,
+.second-flow {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.letter-card,
+.kiss-card {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border: 2px solid #f8bdd1;
+    border-radius: 18px;
+    padding: 32px 26px;
+    box-shadow: 0 18px 40px rgba(255, 161, 190, 0.2);
+    text-align: center;
+    color: #4f2033;
+}
+
+.letter-card {
+    background: linear-gradient(180deg, #fff6fb 0%, #ffe8f4 100%);
+    border-color: #ffadd4;
+    position: relative;
+}
+
+.letter-card.bloom {
+    animation: messageBloom 0.9s ease;
+}
+
+@keyframes messageBloom {
+    0% {
+        transform: scale(0.92);
+        opacity: 0;
+        filter: blur(8px);
+    }
+    45% {
+        transform: scale(1.08);
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.letter-card::before,
+.letter-card::after {
+    content: '💗';
+    position: absolute;
+    font-size: 1.4rem;
+    opacity: 0.45;
+}
+
+.letter-card::before {
+    top: 12px;
+    left: 18px;
+}
+
+.letter-card::after {
+    bottom: 12px;
+    right: 18px;
+}
+
+.letter-card p {
+    margin: 0;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    font-family: 'Brush Script MT', 'Segoe Script', 'Comic Sans MS', cursive;
+    color: #bf2e6f;
+    letter-spacing: 0.1em;
+    text-shadow: 0 3px 18px rgba(255, 110, 160, 0.28);
+}
+
+.letter-card p,
+.kiss-card p {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.envelope-button,
+.kiss-button {
+    border: none;
+    background: linear-gradient(135deg, #ff82a3, #ff4e84);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 12px 18px rgba(255, 120, 148, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.envelope-button:hover,
+.kiss-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 20px rgba(255, 120, 148, 0.35);
+}
+
+.kiss-card {
+    display: grid;
+    gap: 14px;
+}
+
+.kiss-card p {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+#loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.envelope-screen::before {
+    content: '💘';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 2.4rem;
+    opacity: 0.16;
+    pointer-events: none;
+}
+
+.envelope-screen::after {
+    content: '🌸🌹💕';
+    position: absolute;
+    bottom: 12px;
+    right: 18px;
+    font-size: 1.2rem;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+    /* Extra love decorations around the notebook */
+    body::before {
+        content: '💖 💕 💘';
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        font-size: 1.1rem;
+        opacity: 0.22;
+        pointer-events: none;
+    }
+
+    body::after {
+        content: '🌹💞🌸';
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        font-size: 1.1rem;
+        opacity: 0.22;
+        pointer-events: none;
+    }
+
+    .notebook-container::before {
+        content: '💌';
+        position: absolute;
+        top: -16px;
+        left: 18px;
+        font-size: 2rem;
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    .notebook-container::after {
+        content: '💕';
+        position: absolute;
+        bottom: -16px;
+        right: 18px;
+        font-size: 2rem;
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    h2::after {
+        content: ' ❤️';
+    }
+        height: 120px;
+    }
+
+    .envelope-seal {
+        width: 62px;
+        height: 62px;
+        font-size: 1.4rem;
+    }
+
+    .envelope-button,
+    .kiss-button {
+        width: 100%;
+    }
+}
+
+.loader-decor .cupid {
+    font-size: 2.6rem;
+    transform-origin: center;
+    animation: cupidBounce 2s ease-in-out infinite;
+}
+
+.loader-decor .loader-static-flowers {
+    font-size: 1.6rem;
+    opacity: 0.95;
+    transform: translateY(2px);
+}
+
+@keyframes cupidBounce {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-10px) rotate(6deg); }
+}
+
+/* Loader particle styles */
+.loader-particle {
+    position: absolute;
+    font-size: 18px;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: loaderFloat 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes loaderFloat {
+    0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 1; }
+    40% { transform: translateY(-30px) scale(1.05) rotate(10deg); opacity: 0.95; }
+    100% { transform: translateY(-180px) scale(1) rotate(-15deg); opacity: 0; }
+}
+
+.loading-text {
+    margin-top: 20px;
+    color: #ff758f;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    animation: blink 1.5s infinite;
+}
+
+#loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Animations Logic Nodes */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.25); }
+    60% { transform: scale(1); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}   
+
+/* Floating hearts overlay */
+.floating-hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 120;
+    overflow: hidden;
+}
+
+.floating-hearts .heart {
+    position: absolute;
+    bottom: -40px;
+    color: #ff4d6d;
+    filter: drop-shadow(0 6px 12px rgba(255,77,109,0.12));
+    opacity: 0.95;
+    transform: translateY(0) rotate(0deg);
+    animation-name: floatUp;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-iteration-count: 1;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.9);
+        opacity: 1;
+    }
+    30% {
+        transform: translateY(-60px) rotate(10deg) scale(1.05);
+        opacity: 0.95;
+    }
+    100% {
+        transform: translateY(-650px) rotate(-20deg) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Small decorative hearts inside the notebook pages (subtle) */
+.right-page .heart-badge {
+    display: inline-block;
+    margin-left: 8px;
+    color: #ff4d6d;
+    font-size: 1rem;
+    vertical-align: middle;
+    transform-origin: center;
+    animation: badgePop 1.2s ease-in-out infinite;
+}
+
+@keyframes badgePop {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 700px) {
+    body {
+        padding: 12px;
+    }
+
+    .notebook-container {
+        max-width: 420px;
+        height: auto;
+        min-height: 560px;
+        border-radius: 10px;
+        border-width: 8px;
+        transform: none;
+    }
+
+    .notebook-rings {
+        display: none;
+    }
+
+    .notebook-pages {
+        height: auto;
+    }
+
+    .book-spread {
+        position: relative;
+        display: none;
+        flex-direction: column;
+        height: auto;
+        transform: none !important;
+        transition: none;
+    }
+
+    /* Only show the active spread on small screens so navigation controls work like pages */
+    .book-spread.active {
+        display: flex;
+        opacity: 1 !important;
+        pointer-events: auto;
+    }
+
+    .book-spread.flipped {
+        display: none;
+        transform: none !important;
+    }
+
+    .left-page, .right-page {
+        width: 100%;
+        padding: 20px;
+        background-size: 100% 2rem;
+    }
+
+    .left-page {
+        border-right: none;
+        padding-bottom: 12px;
+    }
+
+    .right-page {
+        border-left: none;
+    }
+
+    .photo-frame {
+        max-height: 240px;
+        transform: none;
+        padding: 8px;
+    }
+
+    .photo-frame img {
+        width: 100%;
+        height: auto;
+        max-height: 240px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    h2 {
+        font-size: 1.35rem;
+    }
+
+    p {
+        font-size: 0.98rem;
+        line-height: 1.6rem;
+    }
+
+    .icon {
+        font-size: 2.2rem;
+    }
+
+    .navigation {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 8px;
+        margin: 0 12px;
+        height: 56px;
+        padding: 0 16px;
+        border-radius: 12px;
+        z-index: 200;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .nav-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 1.05rem;
+    }
+
+    #page-indicator {
+        font-size: 0.95rem;
+    }
+
+    /* Reduce intensity of floating hearts on small screens */
+    .floating-hearts .heart {
+        display: block;
+        font-size: 18px !important;
+        animation-duration: 3.6s !important;
+    }
+
+    /* Loader tweaks */
+    #loader {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .heart-loader {
+        font-size: 3rem;
+    }
+
+    .loader-decor {
+        top: 12%;
+        right: 6%;
+        width: 160px;
+        height: 90px;
+    }
+
+    /* Ensure page-5 image shows full picture (no cropping) on mobile */
+    #page-5 .photo-frame {
+        max-height: 360px;
+    }
+    #page-5 .photo-frame img {
+        object-fit: contain !important;
+        width: 100%;
+        height: auto;
+        max-height: 360px;
+    }
+}
+
+@media (max-width: 420px) {
+    .notebook-container {
+        min-height: 640px;
+        max-width: 360px;
+    }
+
+    .photo-frame {
+        max-height: 200px;
+    }
+
+    .loader-decor .cupid {
+        font-size: 2.2rem;
+    }
+
+    .floating-hearts .heart { font-size: 16px !important; }
+
+    /* Smaller mobile override for page-5 image */
+    #page-5 .photo-frame { max-height: 300px; }
+    #page-5 .photo-frame img { object-fit: contain !important; max-height: 300px; }
+}
+
+
+/* Make the text content of page 5 scrollable */
+#page-5 .right-page {
+    max-height: 400px; /* Adjust this height based on your layout design */
+    overflow-y: auto;  /* Enables vertical scrolling only when content overflows */
+    padding-right: 10px; /* Adds space so text doesn't touch the scrollbar */
+}
+
+/* Optional: Make the scrollbar look clean and modern */
+#page-5 .right-page::-webkit-scrollbar {
+    width: 6px;
+}
+
+#page-5 .right-page::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#page-5 .right-page::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2); /* Soft, subtle scrollbar thumb */
+    border-radius: 10px;
+}
+
+#page-5 .right-page::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile View adjustments for Page 5 scrolling */
+@media screen and (max-width: 768px) {
+    /* 1. Ensure the spread container allows its children to handle height properly */
+    #page-5 {
+        display: flex;
+        flex-direction: column; /* Stacks the photo page and text page vertically on mobile */
+    }
+
+    /* 2. Apply scrolling strictly to the right page text area */
+    #page-5 .right-page {
+        max-height: 50vh;       /* Limits the height to 50% of the mobile screen height */
+        overflow-y: auto;       /* Enables vertical scrolling */
+        padding-bottom: 20px;   /* Gives breathing room at the bottom so the last line isn't cut off */
+        padding-right: 8px;     /* Keeps the text clear of the scrollbar */
+        -webkit-overflow-scrolling: touch; /* Ensures ultra-smooth scrolling on iPhones/iOS */
+    }
+
+    /* 3. Custom clean scrollbar for mobile */
+    #page-5 .right-page::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    #page-5 .right-page::-webkit-scrollbar-thumb {
+        background: rgba(255, 105, 180, 0.4); /* Subtle pink thumb matching your love theme */
+        border-radius: 4px;
+    }
+}
+

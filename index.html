@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Universe 💖</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="loader" class="envelope-screen">
+        <div class="envelope-scene">
+            <div class="envelope-text">Touch the seal to open</div>
+            <div class="envelope" id="main-envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="envelope-seal" id="envelope-seal" role="button" aria-label="Open envelope" tabindex="0">💌</div>
+                </div>
+            </div>
+
+            <div class="letter-panel hidden" id="letter-panel">
+                <div class="letter-card">
+                    <p>happy monthasary babyyyyy i love you</p>
+                </div>
+                <button class="envelope-button" id="open-second-envelope-btn">Click here</button>
+            </div>
+
+            <div class="second-flow hidden" id="second-flow">
+                <div class="envelope small-envelope" id="second-envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-body"></div>
+                </div>
+                <div class="kiss-card">
+                    <p>kiss me first</p>
+                    <button class="kiss-button" id="kiss-btn">😘</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notebook-container hidden">
+        <div class="notebook-rings"></div>
+
+        <div class="notebook-pages">
+            
+            <div class="book-spread active" id="page-1" style="z-index: 5;">
+                <div class="left-page">
+                    <div class="photo-frame">
+                        <img src="images/IMG_20260510_075630_862.jpg" alt="Our Memory">
+                    </div>
+                </div>
+                <div class="right-page">
+                    <div class="icon">🌸</div>
+                    <h2>My Source of Happiness</h2>
+                    <p>I am so incredibly grateful that I met you. Out of everyone in the world, I'm thankful that you became my lover, my girlfriend, my best friend, and my baby. You are my motivation and my inspiration every single day.</p>
+                </div>
+            </div> 
+
+            <div class="book-spread" id="page-2" style="z-index: 4;">
+                <div class="left-page">
+                    <div class="photo-frame">
+                        <img src="images/IMG_20260515_202521_694.jpg" alt="Our Memory">
+                    </div>
+                </div>
+                <div class="right-page">
+                    <div class="icon">💝</div>
+                    <h2>The Best Thing Ever</h2>
+                    <p>Being your boyfriend is truly the best thing that has ever happened to me. You bring so much light into my life, and I cherish every second I get to hold that title.</p>
+                </div>
+            </div>
+
+            <div class="book-spread" id="page-3" style="z-index: 3;">
+                <div class="left-page">
+                    <div class="photo-frame">
+                        <img src="images/IMG_20260515_202847_968.jpg" alt="Our Memory">
+                    </div>
+                </div>
+                <div class="right-page">
+                    <div class="icon">😔</div>
+                    <h2>A Little Note...</h2>
+                    <p>I'm so sorry since we can't meet yet, and we have to celebrate our 1st monthsary without seeing each other. Even though the distance is hard right now, you are worth every single mile.</p>
+                </div>
+            </div>
+
+            <div class="book-spread" id="page-4" style="z-index: 2;">
+                <div class="left-page">
+                    <div class="photo-frame">
+                        <img src="images/Messenger_creation_3BF4F2D9-5934-4847-8C8F-A29B2D7D5501.png" alt="Our Memory">
+                    </div>
+                </div>
+                <div class="right-page">
+                    <div class="icon">💍</div>
+                    <h2>My Promise To You</h2>
+                    <p>I want to assure you that my love for you will never change. Distance means nothing when someone means everything. I promise I will always be your loyal, loving boyfriend, no matter what.</p>
+                </div>
+            </div>
+
+            <div class="book-spread" id="page-5" style="z-index: 1;">
+                <div class="left-page">
+                    <div class="photo-frame">
+                        <img src="images/Black%20and%20White%20Modern%20Photo%20Collage%20Instagram%20Story.png" alt="Our Memory">
+                    </div>
+                </div>
+                <div class="right-page">
+                    <div class="icon">🎮</div>
+                    <h2>Our Story</h2>
+                    <p>It all started when you were my opponent on Mobile Legends. I won the match, but I couldn't resist inviting you for another round! After a few games together, I finally worked up the courage to ask for your Instagram.</p>
+                    <p>That's where our love story truly began. I fell completely in love with you. I kept chatting with you, constantly sharing reels, until you finally let me be your boyfriend.</p>
+                    <p><strong>May 24</strong> is the start of our relationship. Every day since then has become so much happier. Chatting and loving you everyday is easily the best part of my life. 💕</p>
+                </div>
+            </div>
+
+            <div class="book-spread" id="page-6" style="z-index: 0;">
+                <div class="left-page">
+                    <div class="photo-frame">
+                        <img src="images/Messenger_creation_02AC05C5-96A5-471E-A17F-8A94E320E977.png" alt="Thank You">
+                    </div>
+                </div>
+                <div class="right-page">
+                    <div class="icon">💞</div>
+                    <h2>Thankyouu</h2>
+                    <p>Thank you for being the brightest part of my life. I love youuuu — always and forever.</p>
+                    <p class="heart-badge">💖💐</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="navigation">
+            <button id="prevBtn" class="nav-btn disabled"><i class="fas fa-arrow-left"></i></button>
+            <span id="page-indicator">1 / 5</span>
+            <button id="nextBtn" class="nav-btn"><i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="floating-hearts" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
